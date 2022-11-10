@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
+import 'antd/dist/antd.css'
+import Projects from './pages/projects';
 
 function App() {
+
+  const[projectList, setProjectList] = useState([])
+
+  function handleOnProjectclick(event){
+      console.log("Card Is Clicked")
+  }
+
+  useEffect(()=>{
+
+    fetch("http://localhost:9292/api/projects")
+    .then(res =>res.json())
+    .then(data=>setProjectList(data))
+
+  },[])
+
+  console.log(projectList)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <Projects projects={projectList} handleOnclick={handleOnProjectclick}/>
   );
 }
 
