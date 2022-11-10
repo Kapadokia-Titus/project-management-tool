@@ -6,7 +6,7 @@ import RegisterUsers from "./users/Register";
 export default function Users(){
 
     // get status
-    const [isLoggedIn, setIsLoggedIn] = useState(false) 
+    const [isLoggedIn, setIsLoggedIn] = useState(true) 
     const [authUi, setAuthUi]= useState("login")
 
 
@@ -29,6 +29,7 @@ export default function Users(){
 
 
     const onFinish = (values) => {
+        
 
         fetch("http://localhost:9292/api/users", {
           method:"POST", 
@@ -52,14 +53,18 @@ export default function Users(){
     }
 
     let ui; 
+   if(isLoggedIn){
+    ui = <Projects projects={projectList} handleOnclick={handleOnProjectclick}/>
+   }else{
     if  (authUi==="login"){
-       ui = <LoginUsers handleSwitch={handleSwitch} />
-    }else if(authUi=="loggedIn"){
-        ui = <Projects projects={projectList} handleOnclick={handleOnProjectclick}/>
-    }
-    else{
-        ui = <RegisterUsers handleSwitch={handleSwitch} onFinish={onFinish}/>
-    }
+        ui = <LoginUsers handleSwitch={handleSwitch} />
+     }else if(authUi=="loggedIn"){
+         ui = <Projects projects={projectList} handleOnclick={handleOnProjectclick}/>
+     }
+     else{
+         ui = <RegisterUsers handleSwitch={handleSwitch} onFinish={onFinish}/>
+     }
+   } 
 
     
 

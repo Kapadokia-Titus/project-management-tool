@@ -11,6 +11,33 @@ const NewProject = () => {
   const onClose = () => {
     setOpen(false);
   };
+
+  const onFinish = (values) => {
+
+    fetch("http://localhost:9292/api/projects", {
+      method:"POST", 
+      headers:{
+          "Content-Type":"application/json"
+      },
+      body:JSON.stringify(values)
+  }
+  ).then(res=>res.json()).then(data=>console.log(data))
+
+  // onsuccess => dashboard
+  };
+
+// make a post request and submit form inputs
+    // 1. initialize state
+    const [formData, setFormData] = useState({})
+    // handle onChange
+    function handleOnChange(event){
+      const key = event.target.id; 
+      
+      setFormData({...formData, [key]:event.target.value})
+
+      console.log(formData)
+  }
+
   return (
     <>
       <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
@@ -26,18 +53,17 @@ const NewProject = () => {
         }}
         extra={
           <Space>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={onClose} type="primary">
-              Submit
+            <Button onSubmit={onFinish} type="primary">
+              Cancel
             </Button>
           </Space>
         }
       >
-        <Form layout="vertical" hideRequiredMark>
+        <Form layout="vertical" onFinish={onFinish} hideRequiredMark>
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="Project name"
+                name="name"
                 label="Name"
                 rules={[
                   {
@@ -46,109 +72,75 @@ const NewProject = () => {
                   },
                 ]}
               >
-                <Input placeholder="Please enter Project name" />
+                <Input  id='name' onChange={handleOnChange} placeholder="Please enter Project name" />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item
-                name="url"
-                label="Url"
+            <Form.Item
+                name="scope"
+                label="Which Scope does the project lie? "
                 rules={[
                   {
                     required: true,
-                    message: 'Please enter github/gitlab/drive url',
+                    message: 'Please enter Project Scome',
                   },
                 ]}
               >
-                <Input
-                  style={{
-                    width: '100%',
-                  }}
-                  addonBefore="http://"
-                  addonAfter=".com"
-                  placeholder="Please enter url"
-                />
+                <Input id='scope' onChange={handleOnChange} placeholder="Please enter Project Scope" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col span={12}>
-              <Form.Item
-                name="owner"
-                label="Owner"
+            <Form.Item
+                name="creator"
+                label="Creator Email"
                 rules={[
                   {
                     required: true,
-                    message: 'Please select an owner',
+                    message: 'Please enter Project Creator',
                   },
                 ]}
               >
-                <Select placeholder="Please select an owner">
-                  <Option value="xiao">Xiaoxiao Fu</Option>
-                  <Option value="mao">Maomao Zhou</Option>
-                </Select>
+                <Input id='creator' onChange={handleOnChange} placeholder="Please enter Project Creator" />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item
-                name="type"
-                label="Type"
+            <Form.Item
+                name="approach"
+                label="What's this project approach?"
                 rules={[
                   {
                     required: true,
-                    message: 'Please choose the type',
+                    message: 'Please enter Project Approach',
                   },
                 ]}
               >
-                <Select placeholder="Please choose the type">
-                  <Option value="private">Private</Option>
-                  <Option value="public">Public</Option>
-                </Select>
+                <Input id='approach' onChange={handleOnChange} placeholder="Please enter Project Approach" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="approver"
-                label="Approver"
+           
+            <Col span={24}>
+            <Form.Item
+                name="timeframe"
+                label="What's the project timeframe"
                 rules={[
                   {
                     required: true,
-                    message: 'Please choose the approver',
+                    message: 'Please enter project timeframe',
                   },
                 ]}
               >
-                <Select placeholder="Please choose the approver">
-                  <Option value="jack">Jack Ma</Option>
-                  <Option value="tom">Tom Liu</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="dateTime"
-                label="DateTime"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please choose the dateTime',
-                  },
-                ]}
-              >
-                <DatePicker.RangePicker
-                  style={{
-                    width: '100%',
-                  }}
-                  getPopupContainer={(trigger) => trigger.parentElement}
-                />
+                <Input id='creator' onChange={handleOnChange} placeholder="Please enter project timeframe" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col span={24}>
               <Form.Item
-                name="description"
+                name="desc"
                 label="Description"
                 rules={[
                   {
@@ -157,10 +149,14 @@ const NewProject = () => {
                   },
                 ]}
               >
-                <Input.TextArea rows={4} placeholder="please enter url description" />
+                <Input.TextArea id='desc' onChange={handleOnChange} rows={4} placeholder="please enter  description" />
               </Form.Item>
             </Col>
           </Row>
+
+          <Button type="primary" htmlType="submit" style={{marginRight:20}}>
+                  Create Project
+                </Button>
         </Form>
       </Drawer>
     </>
