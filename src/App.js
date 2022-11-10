@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import 'antd/dist/antd.css'
 import Projects from './pages/projects';
+import Users from './pages/users';
 
 function App() {
 
@@ -20,7 +21,10 @@ function App() {
 
   console.log(projectList)
   return (
-  <Projects projects={projectList} handleOnclick={handleOnProjectclick}/>
+  <>
+    <Users />
+    {/* <Projects projects={projectList} handleOnclick={handleOnProjectclick}/> */}
+  </>
   );
 }
 
