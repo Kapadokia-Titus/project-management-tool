@@ -5,9 +5,11 @@ import { Card, Col, Row } from 'antd';
 import NewProject from '../components/new_project';
 import ViewProject from '../components/view_project';
 
+
 const Projects = ({projects, handleOnclick}) => (
 
     
+  
   <div className="site-card-wrapper">
     <NewProject />
     <div>

@@ -2,6 +2,7 @@ import { Button, Drawer,Avatar, Comment, Tooltip, Tag, Divider, Timeline, Checkb
 import React, { useState , useEffect} from 'react';
 import { SmileOutlined } from '@ant-design/icons';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import NewDeliverable from './new_deliverable';
 
 const ViewProject = ({projectDetail}) => {
 
@@ -34,8 +35,17 @@ const ViewProject = ({projectDetail}) => {
 
 
 // Deliverables checkbox
+ // check state
+    const [isChecked, setIsChecked] = useState(false)
     const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
+      setIsChecked(e.target.checked)
+    fetch(`http://localhost:9292/api/projects/${projectDetail.id}/deliverables/${e.target.id}`, {
+      method:"PUT",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({status:e.target.checked})
+    })
   };
   
 
@@ -110,9 +120,11 @@ const ViewProject = ({projectDetail}) => {
         >
          {deliverables?.map((deliverable)=>
                 <>
-                <Checkbox onChange={onChange}>{deliverable.name}</Checkbox><br/>
+                <Checkbox id={deliverable.id} key={deliverable.id} defaultChecked={e=>e.target.checked} onChange={onChange}>{deliverable.name}</Checkbox><br/>
                 </>
             )}
+
+          <NewDeliverable projectDetail={projectDetail} />
         </Drawer>
       </Drawer>
     </>

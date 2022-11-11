@@ -5,21 +5,7 @@ import Users from './pages/users';
 
 function App() {
 
-  const[projectList, setProjectList] = useState([])
 
-  function handleOnProjectclick(event){
-      console.log("Card Is Clicked")
-  }
-
-  useEffect(()=>{
-
-    fetch("http://localhost:9292/api/projects")
-    .then(res =>res.json())
-    .then(data=>setProjectList(data))
-
-  },[])
-
-  console.log(projectList)
   return (
   <>
     <Users />
