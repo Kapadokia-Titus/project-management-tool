@@ -60,8 +60,8 @@ const ViewProject = ({projectDetail}) => {
     }
     else if(projectDetail.status==="overdue") {
         statusTag =  <Tag color="error">{projectDetail.status}</Tag>
-    }else{
-        statusTag = <Tag color="grey">{projectDetail.status}</Tag>
+    }else if(projectDetail.status===null){
+        statusTag = <Tag color="warning">On Your Marks 🏃‍♂️</Tag>
     }
 //   End Handling status
 

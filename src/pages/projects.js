@@ -4,6 +4,7 @@ import './index.css';
 import { Card, Col, Row } from 'antd';
 import NewProject from '../components/new_project';
 import ViewProject from '../components/view_project';
+import { UsersBadge } from '../components/users_badges';
 
 
 const Projects = ({projects, handleOnclick}) => (
@@ -11,7 +12,12 @@ const Projects = ({projects, handleOnclick}) => (
     
   
   <div className="site-card-wrapper">
-    <NewProject />
+    
+    
+
+   
+        <NewProject /> <br/> <br/> <UsersBadge /><br/>
+   
     <div>
         <h2> Current Projects</h2>
     </div>
